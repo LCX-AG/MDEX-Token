@@ -36,12 +36,13 @@ contract MDEX is IERC20 {
         _entered = false;
     }
 
-    constructor() {
+    constructor(address multisigAddress) {
+        require(multisigAddress != address(0), "Cannot add funds in zero address");
         symbol = "MDEX";
         name = "MasterDEX Token";
         decimals = 18;
         totalSupply = 300000000 * 10 ** decimals;
-        balanceOf[msg.sender] = totalSupply;
+        balanceOf[multisigAddress] = totalSupply;
         owner = msg.sender;
         emit Transfer(address(0), msg.sender, totalSupply);
     }
@@ -84,11 +85,6 @@ contract MDEX is IERC20 {
 
     function withdrawToken(address _tokenContract, uint256 _amount) external onlyOwner {
         IERC20(_tokenContract).transfer(msg.sender, _amount);
-    }
-
-    function withdrawEth() public onlyOwner nonReentrant {
-        uint amount = address(this).balance;
-        payable(owner).transfer(amount);
     }
 
     function transferOwnership(address newOwner) public onlyOwner {
