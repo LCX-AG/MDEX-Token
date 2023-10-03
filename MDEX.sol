@@ -75,12 +75,12 @@ contract MDEX is IERC20 {
         emit Transfer(sender, recipient, amount);
     }
 
-    function _approve(address owner, address spender, uint amount) internal {
-        require(owner != address(0), "Approve from the zero address");
+    function _approve(address _owner, address spender, uint amount) internal {
+        require(_owner != address(0), "Approve from the zero address");
         require(spender != address(0), "Approve to the zero address");
         
-        allowance[owner][spender] = amount;
-        emit Approval(owner, spender, amount);
+        allowance[_owner][spender] = amount;
+        emit Approval(_owner, spender, amount);
     }
 
     function withdrawToken(address _tokenContract, uint256 _amount) external onlyOwner {
