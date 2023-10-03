@@ -44,7 +44,7 @@ contract MDEX is IERC20 {
         totalSupply = 300000000 * 10 ** decimals;
         balanceOf[multisigAddress] = totalSupply;
         owner = msg.sender;
-        emit Transfer(address(0), msg.sender, totalSupply);
+        emit Transfer(address(0), multisigAddress, totalSupply);
     }
 
     function transfer(address recipient, uint amount) external override returns (bool) {
